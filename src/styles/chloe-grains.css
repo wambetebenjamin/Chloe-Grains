@@ -1,0 +1,1411 @@
+/*--------------------------------------------------------------
+# Chloe Grains Extension Layer
+# Added on top of the preserved AgriCulture template CSS.
+# Covers: smooth scroll (Lenis), responsive contract (44px tap
+# targets, overflow guards, safe areas, bottom sheets), wordmark,
+# floating WhatsApp + voice tour stack, cookie consent, save
+# buttons, chips, filters, recipe steps and page furniture.
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Lenis smooth scroll (recommended base styles)
+--------------------------------------------------------------*/
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/*--------------------------------------------------------------
+# Responsive contract
+--------------------------------------------------------------*/
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: clip;
+  max-width: 100vw;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 44px minimum tap targets for every interactive control we own */
+.mobile-nav-toggle {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+@media (max-width: 1199px) {
+  .navmenu a,
+  .navmenu a:focus {
+    min-height: 44px;
+  }
+
+  .navmenu > ul {
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+}
+
+.footer .social-links a {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.scroll-top {
+  width: 44px;
+  height: 44px;
+  right: max(15px, env(safe-area-inset-right));
+  bottom: calc(15px + env(safe-area-inset-bottom));
+}
+
+.blog-pagination li a {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.hero .carousel-control-prev,
+.hero .carousel-control-next {
+  min-height: 44px;
+}
+
+.contact .php-email-form button[type=submit],
+.comment-form form .btn-primary,
+.call-to-action .content .form-subscribe input[type=submit] {
+  min-height: 44px;
+}
+
+.call-to-action .content .form-subscribe .form-group {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.call-to-action .content .form-subscribe input[type=submit] {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* Focus visibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.dark-background a:focus-visible,
+.dark-background button:focus-visible {
+  outline-color: var(--contrast-color);
+}
+
+/* Skip link */
+.cg-skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100000;
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  padding: 12px 20px;
+  border-radius: 0 0 6px 6px;
+  font-weight: 600;
+  transition: top 0.3s;
+}
+
+.cg-skip-link:focus {
+  top: 0;
+  color: var(--contrast-color);
+}
+
+/*--------------------------------------------------------------
+# Preloader lifecycle
+--------------------------------------------------------------*/
+#preloader.cg-preloader-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/*--------------------------------------------------------------
+# Wordmark
+--------------------------------------------------------------*/
+.cg-wordmark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1;
+}
+
+.cg-wordmark img {
+  max-height: 38px;
+  width: auto;
+}
+
+.cg-wordmark .cg-wordmark-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.cg-wordmark .cg-wordmark-name {
+  font-family: var(--heading-font);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--heading-color);
+  margin: 0;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.cg-wordmark .cg-wordmark-tagline {
+  font-family: var(--default-font);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent-color), transparent 15%);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.footer .cg-wordmark .cg-wordmark-name {
+  color: var(--heading-color);
+}
+
+@media (max-width: 480px) {
+  .cg-wordmark .cg-wordmark-name {
+    font-size: 20px;
+  }
+
+  .cg-wordmark .cg-wordmark-tagline {
+    font-size: 9.5px;
+    letter-spacing: 1px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Header extras: language switch + saved link
+--------------------------------------------------------------*/
+.cg-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cg-lang {
+  position: relative;
+}
+
+.cg-lang-toggle {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
+  border-radius: 4px;
+  color: var(--nav-color);
+  font-family: var(--nav-font);
+  font-size: 14px;
+  letter-spacing: 1px;
+  padding: 0 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cg-lang-toggle:hover {
+  border-color: var(--accent-color);
+  color: var(--nav-hover-color);
+}
+
+.cg-lang-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 180px;
+  background: var(--nav-dropdown-background-color);
+  border-radius: 4px;
+  box-shadow: 0px 0px 30px color-mix(in srgb, var(--default-color), transparent 85%);
+  padding: 8px 0;
+  z-index: 1000;
+  list-style: none;
+  margin: 0;
+}
+
+.cg-lang-menu button {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 18px;
+  background: transparent;
+  border: 0;
+  color: var(--nav-dropdown-color);
+  font-family: var(--nav-font);
+  font-size: 15px;
+  cursor: pointer;
+  text-align: left;
+  transition: 0.3s;
+}
+
+.cg-lang-menu button:hover {
+  color: var(--nav-dropdown-hover-color);
+}
+
+.cg-lang-menu button[aria-checked="true"] {
+  color: var(--nav-dropdown-hover-color);
+  font-weight: 700;
+}
+
+.cg-saved-link {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  color: var(--nav-color);
+  font-size: 20px;
+  position: relative;
+}
+
+.cg-saved-link:hover,
+.cg-saved-link.active {
+  color: var(--nav-hover-color);
+}
+
+.cg-saved-count {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  background: var(--clay-color);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: 999px;
+  min-width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  font-family: var(--default-font);
+}
+
+@media (max-width: 1199px) {
+  .cg-header-actions {
+    margin-right: 2px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Floating stack: WhatsApp + voice tour (left), scroll top (right)
+--------------------------------------------------------------*/
+.cg-float {
+  position: fixed;
+  left: max(15px, env(safe-area-inset-left));
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  bottom: calc(15px + env(safe-area-inset-bottom));
+}
+
+.cg-float-btn {
+  width: 52px;
+  height: 52px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s, box-shadow 0.3s;
+  font-size: 24px;
+  line-height: 0;
+  text-decoration: none;
+}
+
+.cg-float-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.cg-float-btn:focus-visible {
+  outline: 3px solid var(--heading-color);
+  outline-offset: 2px;
+}
+
+.cg-whatsapp-btn {
+  background: #25d366;
+  color: #063d1d;
+}
+
+.cg-voice-btn {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+.cg-voice-btn[aria-pressed="true"] {
+  background: var(--clay-color);
+}
+
+/* Voice tour panel */
+.cg-voice-panel {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 12px);
+  width: min(320px, calc(100vw - 40px));
+  background: var(--surface-color);
+  color: var(--default-color);
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.28);
+  padding: 18px;
+  animation: cgSheetUp 0.35s ease both;
+}
+
+.cg-voice-panel h2 {
+  font-size: 17px;
+  margin-bottom: 6px;
+  color: var(--heading-color);
+}
+
+.cg-voice-panel p {
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  color: color-mix(in srgb, var(--default-color), transparent 25%);
+}
+
+.cg-voice-panel .cg-voice-status {
+  font-size: 12px;
+  font-style: italic;
+  min-height: 18px;
+  margin-bottom: 10px;
+  color: var(--accent-color);
+}
+
+.cg-voice-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.cg-voice-controls button {
+  min-height: 44px;
+  min-width: 44px;
+  flex: 1;
+  border-radius: 6px;
+  border: 1px solid var(--accent-color);
+  background: transparent;
+  color: var(--accent-color);
+  font-family: var(--heading-font);
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: 0.3s;
+}
+
+.cg-voice-controls button.cg-voice-primary {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+.cg-voice-controls button:hover {
+  filter: brightness(1.1);
+}
+
+/*--------------------------------------------------------------
+# Cookie consent (bar on desktop, bottom sheet on mobile)
+--------------------------------------------------------------*/
+.cg-cookie {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99990;
+  padding: 12px max(12px, env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.cg-cookie-card {
+  pointer-events: auto;
+  background: var(--surface-color);
+  color: var(--default-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  border-bottom: 4px solid var(--accent-color);
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 -8px 34px rgba(0, 0, 0, 0.18);
+  max-width: 1080px;
+  width: 100%;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  animation: cgSheetUp 0.4s ease both;
+}
+
+@media (min-width: 992px) {
+  .cg-cookie-card {
+    border-radius: 8px;
+    border-bottom-width: 1px;
+    border-left: 4px solid var(--accent-color);
+  }
+}
+
+.cg-cookie-text {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.cg-cookie-text strong {
+  color: var(--heading-color);
+  font-family: var(--heading-font);
+  font-size: 15px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.cg-cookie-text a {
+  text-decoration: underline;
+}
+
+.cg-cookie-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 190px;
+}
+
+.cg-cookie-actions button {
+  min-height: 44px;
+  border-radius: 6px;
+  border: 1px solid var(--accent-color);
+  font-family: var(--heading-font);
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 8px 18px;
+}
+
+.cg-cookie-accept {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+.cg-cookie-accept:hover {
+  background: color-mix(in srgb, var(--accent-color), transparent 15%);
+}
+
+.cg-cookie-essential {
+  background: transparent;
+  color: var(--accent-color);
+}
+
+.cg-cookie-essential:hover {
+  background: color-mix(in srgb, var(--accent-color), transparent 90%);
+}
+
+@media (max-width: 767px) {
+  .cg-cookie-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 18px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .cg-cookie-actions {
+    min-width: 0;
+  }
+}
+
+@keyframes cgSheetUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*--------------------------------------------------------------
+# Bottom sheet primitive (mobile filters etc.)
+--------------------------------------------------------------*/
+.cg-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(33, 37, 41, 0.6);
+  z-index: 9995;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  animation: cgFadeIn 0.3s ease both;
+}
+
+.cg-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9996;
+  background: var(--background-color);
+  border-radius: 14px 14px 0 0;
+  max-height: 78vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
+  padding-bottom: env(safe-area-inset-bottom);
+  animation: cgSheetUp 0.35s ease both;
+}
+
+.cg-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 88%);
+}
+
+.cg-sheet-header h2 {
+  font-size: 19px;
+  margin: 0;
+  color: var(--heading-color);
+}
+
+.cg-sheet-close {
+  min-width: 44px;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  font-size: 22px;
+  line-height: 0;
+  color: var(--default-color);
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.cg-sheet-body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 18px 22px;
+}
+
+@keyframes cgFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/*--------------------------------------------------------------
+# Chips, badges, tags
+--------------------------------------------------------------*/
+.cg-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 60%);
+  color: var(--accent-color);
+  background: color-mix(in srgb, var(--accent-color), transparent 94%);
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 4px 12px;
+  line-height: 1.4;
+}
+
+.cg-chip-clay {
+  border-color: color-mix(in srgb, var(--clay-color), transparent 55%);
+  color: var(--clay-color);
+  background: color-mix(in srgb, var(--clay-color), transparent 92%);
+}
+
+button.cg-chip,
+a.cg-chip {
+  min-height: 44px;
+  cursor: pointer;
+  font-family: var(--default-font);
+  transition: 0.25s;
+}
+
+button.cg-chip[aria-pressed="true"],
+button.cg-chip.active,
+a.cg-chip.active {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+button.cg-chip:hover {
+  border-color: var(--accent-color);
+}
+
+.cg-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cg-badge-note {
+  display: block;
+  font-size: 12.5px;
+  color: color-mix(in srgb, var(--default-color), transparent 35%);
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/*--------------------------------------------------------------
+# Filter bar (desktop inline, mobile bottom sheet)
+--------------------------------------------------------------*/
+.cg-filters {
+  background: var(--surface-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 88%);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+.cg-filter-group + .cg-filter-group {
+  margin-top: 16px;
+}
+
+.cg-filter-group h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: color-mix(in srgb, var(--default-color), transparent 35%);
+  margin-bottom: 10px;
+  font-family: var(--default-font);
+  font-weight: 700;
+}
+
+.cg-filter-select {
+  min-height: 44px;
+  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 70%);
+  background: var(--background-color);
+  color: var(--default-color);
+  padding: 8px 12px;
+  font-size: 15px;
+  width: 100%;
+}
+
+.cg-filter-select:focus {
+  border-color: var(--accent-color);
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color), transparent 85%);
+}
+
+.cg-filter-toggle {
+  display: none;
+}
+
+@media (max-width: 991px) {
+  .cg-filter-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 8px 20px;
+    border-radius: 6px;
+    border: 1px solid var(--accent-color);
+    background: var(--accent-color);
+    color: var(--contrast-color);
+    font-family: var(--heading-font);
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 24px;
+  }
+
+  .cg-filters {
+    border: 0;
+    padding: 0;
+    margin-bottom: 0;
+  }
+}
+
+/*--------------------------------------------------------------
+# Save (bookmark) button
+--------------------------------------------------------------*/
+.cg-save-btn {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, var(--clay-color), transparent 55%);
+  background: var(--surface-color);
+  color: var(--clay-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 14px;
+  font-size: 17px;
+  line-height: 0;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cg-save-btn span {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.2;
+  font-family: var(--default-font);
+}
+
+.cg-save-btn:hover {
+  border-color: var(--clay-color);
+  background: color-mix(in srgb, var(--clay-color), transparent 92%);
+}
+
+.cg-save-btn[aria-pressed="true"] {
+  background: var(--clay-color);
+  border-color: var(--clay-color);
+  color: #fff;
+}
+
+/*--------------------------------------------------------------
+# Hero extensions (CTA row inside carousel container)
+--------------------------------------------------------------*/
+.hero .cg-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  animation: fadeInUp 1s both 0.4s;
+}
+
+.hero .btn-get-started.cg-btn-outline {
+  background: transparent;
+  border: 2px solid var(--contrast-color);
+  color: var(--contrast-color);
+}
+
+.hero .btn-get-started.cg-btn-outline:hover {
+  background: var(--contrast-color);
+  color: var(--heading-color);
+}
+
+.hero .carousel-container {
+  padding-bottom: calc(0px + env(safe-area-inset-bottom));
+}
+
+@media (max-width: 768px) {
+  .hero .carousel-container {
+    inset: 70px 24px calc(48px + env(safe-area-inset-bottom)) 24px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Card grids for foods, recipes, origins, producers
+--------------------------------------------------------------*/
+.cg-card {
+  background-color: var(--surface-color);
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cg-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.14);
+}
+
+.cg-card .cg-card-img {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.cg-card .cg-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.5s;
+}
+
+.cg-card:hover .cg-card-img img {
+  transform: scale(1.06);
+}
+
+.cg-card .cg-card-tag {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 6px 12px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+}
+
+.cg-card .cg-card-body {
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.cg-card .cg-card-title {
+  color: var(--heading-color);
+  font-size: 21px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  transition: 0.3s;
+}
+
+.cg-card:hover .cg-card-title {
+  color: var(--accent-color);
+}
+
+.cg-card .cg-card-text {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: color-mix(in srgb, var(--default-color), transparent 15%);
+  margin-bottom: 16px;
+}
+
+.cg-card .cg-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.cg-card .cg-card-foot {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 88%);
+  padding-top: 16px;
+}
+
+.cg-card .readmore {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  line-height: 1;
+  transition: 0.3s;
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  min-height: 44px;
+}
+
+.cg-card .readmore i {
+  line-height: 0;
+  margin-left: 6px;
+  font-size: 16px;
+}
+
+.cg-card:hover .readmore {
+  color: var(--accent-color);
+}
+
+/* Stretched card link keeps the whole card clickable like the template */
+.cg-card .cg-card-title a {
+  color: inherit;
+}
+
+.cg-card .cg-card-title a:hover {
+  color: var(--accent-color);
+}
+
+/*--------------------------------------------------------------
+# Recipe steps + detail furniture
+--------------------------------------------------------------*/
+.cg-steps {
+  counter-reset: cg-step;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cg-steps li {
+  counter-increment: cg-step;
+  position: relative;
+  padding: 0 0 26px 58px;
+}
+
+.cg-steps li::before {
+  content: counter(cg-step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent-color), transparent 88%);
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+  font-family: var(--heading-font);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cg-steps li::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: 44px;
+  bottom: 4px;
+  width: 1px;
+  background: color-mix(in srgb, var(--accent-color), transparent 75%);
+}
+
+.cg-steps li:last-child {
+  padding-bottom: 0;
+}
+
+.cg-steps li:last-child::after {
+  display: none;
+}
+
+.cg-steps h3 {
+  font-size: 17.5px;
+  margin-bottom: 6px;
+  color: var(--heading-color);
+  font-weight: 700;
+}
+
+.cg-steps p {
+  margin-bottom: 0;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.cg-ingredient-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cg-ingredient-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px dashed color-mix(in srgb, var(--default-color), transparent 82%);
+  font-size: 15px;
+}
+
+.cg-ingredient-list li i {
+  color: var(--accent-color);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.cg-fact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+}
+
+.cg-fact {
+  background: color-mix(in srgb, var(--accent-color), transparent 94%);
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.cg-fact .cg-fact-label {
+  display: block;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.cg-fact .cg-fact-value {
+  display: block;
+  font-family: var(--heading-font);
+  font-size: 16.5px;
+  color: var(--heading-color);
+  line-height: 1.35;
+}
+
+/*--------------------------------------------------------------
+# Profile / detail page furniture
+--------------------------------------------------------------*/
+.cg-profile-intro {
+  font-size: 19px;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--default-color), transparent 8%);
+}
+
+.cg-callout {
+  background: color-mix(in srgb, var(--clay-color), transparent 93%);
+  border-left: 4px solid var(--clay-color);
+  border-radius: 0 8px 8px 0;
+  padding: 18px 22px;
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+
+.cg-callout strong {
+  color: var(--heading-color);
+}
+
+.cg-callout-green {
+  background: color-mix(in srgb, var(--accent-color), transparent 93%);
+  border-left-color: var(--accent-color);
+}
+
+.cg-section-heading {
+  font-size: 24px;
+  color: var(--heading-color);
+  margin-bottom: 18px;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.cg-section-heading::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 44px;
+  height: 3px;
+  background: var(--accent-color);
+  border-radius: 2px;
+}
+
+/*--------------------------------------------------------------
+# Origins: region marker cards
+--------------------------------------------------------------*/
+.cg-origin-marker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--heading-font);
+  color: var(--clay-color);
+  font-size: 15px;
+  letter-spacing: 0.6px;
+}
+
+.cg-origin-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 88%);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--surface-color);
+}
+
+.cg-origin-strip a {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 22px 20px;
+  min-height: 44px;
+  border-right: 1px solid color-mix(in srgb, var(--default-color), transparent 88%);
+  color: var(--default-color);
+  transition: 0.3s;
+}
+
+.cg-origin-strip a:last-child {
+  border-right: 0;
+}
+
+.cg-origin-strip a:hover {
+  background: color-mix(in srgb, var(--accent-color), transparent 93%);
+  color: var(--accent-color);
+}
+
+.cg-origin-strip .cg-origin-name {
+  font-family: var(--heading-font);
+  font-size: 17px;
+  color: var(--heading-color);
+}
+
+.cg-origin-strip a:hover .cg-origin-name {
+  color: var(--accent-color);
+}
+
+.cg-origin-strip .cg-origin-sub {
+  font-size: 13px;
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+}
+
+@media (max-width: 767px) {
+  .cg-origin-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .cg-origin-strip a {
+    border-right: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 88%);
+  }
+
+  .cg-origin-strip a:last-child {
+    border-bottom: 0;
+  }
+}
+
+/*--------------------------------------------------------------
+# Forms (share recipe, contact): selects, help text, status
+--------------------------------------------------------------*/
+.cg-form label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.cg-form .form-control,
+.cg-form .form-select {
+  border-radius: 0px;
+  box-shadow: none;
+  font-size: 14px;
+  border-color: color-mix(in srgb, var(--default-color), transparent 80%);
+  min-height: 44px;
+  color: var(--default-color);
+  background-color: var(--surface-color);
+}
+
+.cg-form textarea.form-control {
+  min-height: 140px;
+}
+
+.cg-form .form-control:focus,
+.cg-form .form-select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color), transparent 85%);
+}
+
+.cg-form-help {
+  font-size: 12.5px;
+  color: color-mix(in srgb, var(--default-color), transparent 45%);
+  margin-top: 5px;
+}
+
+.cg-form-error-text {
+  font-size: 12.5px;
+  color: #c02634;
+  margin-top: 5px;
+  font-weight: 600;
+}
+
+/* honeypot */
+.cg-hp {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.cg-recaptcha-note {
+  font-size: 12px;
+  color: color-mix(in srgb, var(--default-color), transparent 45%);
+  margin-top: 10px;
+}
+
+.cg-recaptcha-box {
+  min-height: 0;
+  margin-top: 10px;
+}
+
+/*--------------------------------------------------------------
+# Saved items / light auth
+--------------------------------------------------------------*/
+.cg-signin-card {
+  background: var(--surface-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 88%);
+  border-radius: 8px;
+  padding: 26px;
+}
+
+.cg-empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  border: 1px dashed color-mix(in srgb, var(--default-color), transparent 75%);
+  border-radius: 8px;
+}
+
+.cg-empty-state i {
+  font-size: 44px;
+  color: color-mix(in srgb, var(--accent-color), transparent 40%);
+  line-height: 1;
+  display: block;
+  margin-bottom: 16px;
+}
+
+/*--------------------------------------------------------------
+# Disclaimer banner (legal pages + food/recipe details)
+--------------------------------------------------------------*/
+.cg-disclaimer {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  background: color-mix(in srgb, var(--default-color), transparent 96%);
+  border-radius: 6px;
+  padding: 14px 18px;
+}
+
+.cg-disclaimer i {
+  color: var(--clay-color);
+  margin-right: 6px;
+}
+
+/*--------------------------------------------------------------
+# Guide blocks (/cook)
+--------------------------------------------------------------*/
+.cg-guide-item {
+  background: var(--surface-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 88%);
+  border-radius: 8px;
+  padding: 26px;
+  height: 100%;
+}
+
+.cg-guide-item h3 {
+  font-size: 19px;
+  color: var(--heading-color);
+  margin-bottom: 10px;
+}
+
+.cg-guide-item p {
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+
+.cg-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cg-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+  min-width: 560px;
+}
+
+.cg-table th,
+.cg-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 88%);
+  vertical-align: top;
+}
+
+.cg-table th {
+  font-family: var(--heading-font);
+  color: var(--heading-color);
+  background: color-mix(in srgb, var(--accent-color), transparent 94%);
+}
+
+/*--------------------------------------------------------------
+# Testimonial attribution helper
+--------------------------------------------------------------*/
+.testimonials .testimonial .client-role {
+  font-size: 13px;
+  text-transform: none;
+  color: color-mix(in srgb, var(--default-color), transparent 45%);
+  margin-top: 2px;
+}
+
+/*--------------------------------------------------------------
+# Reduced motion
+--------------------------------------------------------------*/
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .cg-card:hover {
+    transform: none;
+  }
+
+  .pulsating-play-btn:before {
+    animation: none;
+    opacity: 0.35;
+  }
+}
+
+/*--------------------------------------------------------------
+# Print friendliness (recipes travel well on paper)
+--------------------------------------------------------------*/
+@media print {
+
+  .cg-float,
+  .scroll-top,
+  .cg-cookie,
+  .header,
+  #preloader {
+    display: none !important;
+  }
+}

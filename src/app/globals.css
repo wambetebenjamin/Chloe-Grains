@@ -1,0 +1,19 @@
+/*
+  Chloe Grains global stylesheet.
+
+  Layer order mirrors the original AgriCulture template exactly:
+  vendor CSS (bootstrap, bootstrap-icons, aos, swiper, glightbox) is loaded
+  first from the root layout, then the template's main.css (preserved verbatim
+  except for the brand values inside its :root variable blocks), then the
+  Chloe Grains extension layer for the responsive contract and the new
+  floating components.
+
+  Tailwind 4 is included without preflight so Bootstrap's reboot keeps
+  full control of base element styling, exactly like the template.
+*/
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@import "../styles/template-main.css";
+@import "../styles/chloe-grains.css";

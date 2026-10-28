@@ -1,0 +1,38 @@
+{
+  "name": "chloe-grains",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chloe Grains. Ancient grains. Present strength. A discovery platform for Africa's indigenous grains and botanicals: fonio, teff, moringa, baobab and more, with recipes and sourcing stories that travel.",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "next dev -H 0.0.0.0",
+    "build": "next build",
+    "start": "next start -H 0.0.0.0",
+    "typecheck": "tsc --noEmit",
+    "audit:high": "npm audit --audit-level=high",
+    "gate": "npm ci && tsc --noEmit && next build && npm audit --audit-level=high"
+  },
+  "dependencies": {
+    "aos": "2.3.4",
+    "bootstrap": "5.3.3",
+    "bootstrap-icons": "1.11.3",
+    "glightbox": "3.3.0",
+    "lenis": "1.3.27",
+    "next": "16.4.3",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "swiper": "12.1.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/aos": "3.0.8",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "postcss": "8.5.32",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3"
+  }
+}
